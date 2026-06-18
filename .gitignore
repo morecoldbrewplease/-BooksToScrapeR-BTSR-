@@ -1,0 +1,24 @@
+# Virtual environment (recreate with: pip install -r requirements.txt)
+.venv/
+venv/
+env/
+
+# Python compiled cache files (auto-generated)
+__pycache__/
+*.pyc
+*.pyo
+
+# Flask
+instance/
+*.log
+
+# Editor / IDE settings
+.vscode/
+.idea/
+
+# OS files
+Thumbs.db
+desktop.ini
+.DS_Store
+
+GUIDE.md
