@@ -1,3 +1,5 @@
+"""Print summary statistics for the scraped book data (run after scraper.py)."""
+
 import pandas as pd
 
 df = pd.read_csv("data/books.csv")

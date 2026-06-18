@@ -1,3 +1,9 @@
+"""Scrape every book from books.toscrape.com and save a clean CSV.
+
+Run directly (`python scraper.py`) to crawl all 50 pages, clean the data with
+pandas, and write the result to data/books.csv.
+"""
+
 import time
 from pathlib import Path
 
@@ -10,6 +16,7 @@ RATING_MAP = {"One": 1, "Two": 2, "Three": 3, "Four": 4, "Five": 5}
 
 
 def parse_books(html):
+    """Parse one page of HTML into a list of book dicts (title, price, rating, availability)."""
     soup = BeautifulSoup(html, "html.parser")
     results = []
     for article in soup.find_all("article", class_="product_pod"):
@@ -23,6 +30,7 @@ def parse_books(html):
 
 
 def scrape_all():
+    """Crawl every catalogue page until a 404, returning all books as a list of dicts."""
     all_books = []
     page = 1
     while True:
