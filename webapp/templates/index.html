@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — BooksToScrapeR{% endblock %}
+{% block content %}
+<h1 class="mb-4">Dashboard</h1>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title display-6">{{ stats.total }}</h5>
+        <p class="card-text text-muted">Total books</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title display-6">£{{ stats.avg_price }}</h5>
+        <p class="card-text text-muted">Average price</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title display-6">{{ stats.avg_rating }}</h5>
+        <p class="card-text text-muted">Average rating</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title display-6">{{ stats.in_stock }}</h5>
+        <p class="card-text text-muted">In stock</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  {% for caption, path in charts %}
+  <div class="col-12 col-lg-4">
+    <div class="card shadow-sm">
+      <img src="{{ url_for('static', filename=path) }}" class="card-img-top" alt="{{ caption }}">
+      <div class="card-body"><p class="card-text text-center mb-0">{{ caption }}</p></div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
