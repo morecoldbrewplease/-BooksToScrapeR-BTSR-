@@ -1,8 +1,12 @@
 import time
+from pathlib import Path
+
 import requests
+import pandas as pd
 from bs4 import BeautifulSoup
 
 BASE_URL = "https://books.toscrape.com/catalogue/page-{}.html"
+RATING_MAP = {"One": 1, "Two": 2, "Three": 3, "Four": 4, "Five": 5}
 
 
 def parse_books(html):
@@ -24,6 +28,7 @@ def scrape_all():
     while True:
         url = BASE_URL.format(page)
         response = requests.get(url)
+        response.encoding = "utf-8"  # site omits charset; force correct decoding of £
         if response.status_code == 404:
             break
         all_books += parse_books(response.text)
@@ -36,3 +41,13 @@ def scrape_all():
 if __name__ == "__main__":
     books = scrape_all()
     print(f"\nDone. Scraped {len(books)} books total.")
+
+    df = pd.DataFrame(books)
+    df["price"] = df["price"].str.replace("£", "", regex=False).astype(float)
+    df["rating"] = df["rating"].map(RATING_MAP)
+    Path("data").mkdir(exist_ok=True)
+    df.to_csv("data/books.csv", index=False)
+
+    print(f"\nSaved {len(df)} rows to data/books.csv")
+    print(df.head())
+    print(df.dtypes)
